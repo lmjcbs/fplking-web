@@ -7,6 +7,7 @@ import {
     LoginMutation,
     CurrentUserQuery,
     RegisterMutation,
+    LogoutMutation,
 } from '../generated/graphql';
 
 function betterUpdateQuery<Result, Query>(
@@ -28,6 +29,16 @@ const client = createClient({
         cacheExchange({
             updates: {
                 Mutation: {
+                    logout: (_result, args, cache, info) => {
+                        betterUpdateQuery<LogoutMutation, CurrentUserQuery>(
+                            cache,
+                            { query: CurrentUserDocument },
+                            _result,
+                            () => {
+                                return { currentUser: null };
+                            }
+                        );
+                    },
                     login: (_result, args, cache, info) => {
                         betterUpdateQuery<LoginMutation, CurrentUserQuery>(
                             cache,
