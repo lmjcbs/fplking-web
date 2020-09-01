@@ -157,6 +157,17 @@ export type CurrentUserQuery = (
   )> }
 );
 
+export type LeaguesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LeaguesQuery = (
+  { __typename?: 'Query' }
+  & { leagues: Array<(
+    { __typename?: 'League' }
+    & Pick<League, 'id' | 'name' | 'createdAt' | 'updatedAt'>
+  )> }
+);
+
 export const StandardUserFragmentDoc = gql`
     fragment StandardUser on User {
   id
@@ -216,4 +227,18 @@ export const CurrentUserDocument = gql`
 
 export function useCurrentUserQuery(options: Omit<Urql.UseQueryArgs<CurrentUserQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<CurrentUserQuery>({ query: CurrentUserDocument, ...options });
+};
+export const LeaguesDocument = gql`
+    query Leagues {
+  leagues {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+export function useLeaguesQuery(options: Omit<Urql.UseQueryArgs<LeaguesQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<LeaguesQuery>({ query: LeaguesDocument, ...options });
 };

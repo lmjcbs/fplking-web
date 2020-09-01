@@ -1,0 +1,8 @@
+query Leagues {
+    leagues {
+        id
+        name
+        createdAt
+        updatedAt
+    }
+}
